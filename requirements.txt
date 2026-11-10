@@ -1,0 +1,3 @@
+yt-dlp>=2026.10.26
+requests>=2.31
+pywebview>=6.0

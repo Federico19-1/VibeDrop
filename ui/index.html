@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en" data-theme="dark" data-radius="soft" data-buttons="solid" data-type="software">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark light">
+<title>VibeDrop</title>
+<script>
+  /* The theme must be on <html> before the stylesheets paint, or a light window
+     flashes dark for a frame. app.js keeps localStorage in sync afterwards. */
+  (function () {
+    try {
+      var saved = localStorage.getItem("theme");
+      document.documentElement.dataset.theme =
+        saved === "light" || saved === "system" ? saved : "dark";
+      document.documentElement.dataset.welcomeSeen =
+        localStorage.getItem("welcome_seen") === "1" ? "1" : "0";
+    } catch (error) {
+      document.documentElement.dataset.theme = "dark";
+      document.documentElement.dataset.welcomeSeen = "0";
+    }
+  })();
+</script>
+<link rel="stylesheet" href="/fonts/fonts.css">
+<link rel="stylesheet" href="/kit/system.css">
+<link rel="stylesheet" href="/kit/components-base.css">
+<link rel="stylesheet" href="/app.css?v=20261110-5">
+</head>
+<body class="cx">
+
+<div class="startup-splash" id="startup-splash" role="dialog" aria-label="VibeDrop" aria-live="polite">
+  <div class="startup-splash__card">
+    <span class="startup-splash__mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+    <span class="startup-splash__name">VibeDrop</span>
+  </div>
+</div>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand__mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+    <div>
+      <h1 class="brand__name">VibeDrop</h1>
+      <p class="brand__tag" data-i18n="brand.tag">YouTube in MP3, sul tuo PC</p>
+    </div>
+  </div>
+  <div class="topbar__tools">
+    <span class="pill runtime" id="runtime" data-ok="1">
+      <i class="runtime__dot" aria-hidden="true"></i>
+      <span id="runtime-text">ffmpeg pronto</span>
+    </span>
+    <div class="zoom-controls" aria-label="Zoom controls">
+      <button type="button" class="zoom-controls__button" id="zoom-out" data-i18n-aria-label="zoom.out" aria-label="Zoom out">−</button>
+      <button type="button" class="zoom-controls__value" id="zoom-value" data-i18n-aria-label="zoom.reset" aria-label="Reset zoom">100%</button>
+      <button type="button" class="zoom-controls__button" id="zoom-in" data-i18n-aria-label="zoom.in" aria-label="Zoom in">+</button>
+    </div>
+    <button type="button" class="btn btn--secondary btn--sm" id="open-guide" data-i18n="action.guide">Guida</button>
+    <button type="button" class="btn btn--secondary btn--sm" id="open-settings" data-i18n="action.settings">Impostazioni</button>
+  </div>
+</header>
+
+<section class="notice" id="ytdlp-notice" aria-labelledby="ytdlp-notice-title" hidden>
+  <div class="notice__inner">
+    <p class="notice__text" id="ytdlp-notice-title">
+      <strong data-i18n="notice.title">yt-dlp da aggiornare.</strong>
+      <span id="ytdlp-notice-text"></span>
+    </p>
+    <div class="notice__actions">
+      <button type="button" class="btn btn--secondary btn--sm" id="ytdlp-update" data-i18n="notice.update">Aggiorna</button>
+      <button type="button" class="notice__close" id="ytdlp-dismiss" data-i18n-aria-label="notice.close" aria-label="Chiudi l'avviso">&times;</button>
+    </div>
+  </div>
+</section>
+
+<main class="shell">
+ <div class="app">
+  <div class="workspace">
+    <section class="composer" aria-labelledby="composer-title">
+      <div class="composer__head">
+        <h2 id="composer-title" data-i18n="composer.title">Incolla uno o pi&ugrave; link</h2>
+        <p class="composer__hint" data-i18n="composer.hint">Uno per riga: video, Shorts, youtu.be.</p>
+      </div>
+      <label class="cx-sr" for="urls">Link YouTube</label>
+      <div class="textarea-resize">
+        <textarea id="urls" spellcheck="false" autocomplete="off"
+          data-i18n-placeholder="composer.placeholder"
+          placeholder="https://www.youtube.com/shorts/&hellip;&#10;https://youtu.be/&hellip;"></textarea>
+        <span class="textarea-resize__edge" aria-hidden="true"></span>
+      </div>
+      <div class="composer__foot">
+        <p class="composer__keys">
+          <span class="cx-kbd">Ctrl</span><span class="composer__plus">+</span><span class="cx-kbd keyboard-enter" data-i18n="keyboard.enter">Invio</span>
+          <span data-i18n="composer.run">per avviare</span>
+        </p>
+        <div class="composer__actions">
+          <span class="composer__count" id="url-count">0 link</span>
+          <button type="button" class="btn btn--primary" id="add" disabled data-i18n="composer.download">Scarica</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="queue" aria-labelledby="queue-title">
+      <div class="queue__head">
+        <h2 id="queue-title" data-i18n="queue.title">Coda</h2>
+        <span class="queue__count" id="queue-count">0</span>
+        <button type="button" class="btnlink" id="clear" disabled data-i18n="queue.clear">Svuota completati</button>
+      </div>
+      <div class="cx-card queue__card">
+        <ul class="jobs" id="jobs"></ul>
+        <p class="empty" id="empty" data-i18n="queue.empty">Nessun download. I file finiscono nella cartella qui sotto.</p>
+      </div>
+    </section>
+  </div>
+
+  <aside class="notes" aria-labelledby="notes-title">
+    <div class="notes__head">
+      <h2 id="notes-title" data-i18n="notes.title">Appunti</h2>
+      <span class="notes__count" id="notes-count">0</span>
+      <button type="button" class="btnlink" id="notes-clear" disabled data-i18n="notes.clear">Pulisci</button>
+    </div>
+    <p class="notes__hint" data-i18n="notes.hint">Segna i brani da scaricare e cancellali man mano.</p>
+
+    <form class="notes__composer" id="note-form">
+      <label class="cx-sr" for="note-title" data-i18n="notes.new">Nuova nota</label>
+      <input id="note-title" type="text" autocomplete="off"
+        data-i18n-placeholder="notes.title.placeholder"
+        placeholder="Titolo della canzone">
+      <div class="textarea-resize">
+        <textarea id="note-text" rows="2" spellcheck="false"
+          data-i18n-placeholder="notes.body.placeholder"
+          placeholder="Spiegazione o testo aggiuntivo"></textarea>
+        <span class="textarea-resize__edge" aria-hidden="true"></span>
+      </div>
+      <div class="notes__foot">
+        <span class="notes__keys"><span class="cx-kbd">Ctrl</span><span>+</span><span class="cx-kbd keyboard-enter" data-i18n="keyboard.enter">Invio</span></span>
+        <button type="submit" class="btn btn--secondary btn--sm" id="note-add" data-i18n="notes.add">Aggiungi</button>
+      </div>
+    </form>
+
+    <ul class="notes__list" id="notes-list"></ul>
+    <p class="notes__empty" id="notes-empty" data-i18n="notes.empty">Nessun appunto.</p>
+  </aside>
+ </div>
+</main>
+
+<footer class="foot">
+  <p class="foot__note" data-i18n="foot.note">Solo per uso personale: scarica audio che hai il diritto di usare.</p>
+  <div class="foot__destination">
+    <input class="foot__path" id="output-path" type="text" spellcheck="false"
+      aria-label="Destination folder" value="cartella">
+  </div>
+</footer>
+
+<dialog class="sheet" id="settings" aria-labelledby="settings-title">
+  <form class="sheet__form" id="settings-form" novalidate>
+    <header class="sheet__head">
+      <div>
+        <h2 id="settings-title" tabindex="-1" autofocus data-i18n="settings.title">Impostazioni</h2>
+        <p class="muted" data-i18n="settings.subtitle">Restano su questo PC.</p>
+      </div>
+      <button type="button" class="sheet__close" id="close-settings" data-i18n-aria-label="action.close" aria-label="Chiudi">&times;</button>
+    </header>
+
+    <div class="sheet__body form">
+      <div class="prefs field--full">
+        <div class="field">
+          <span class="field__label" id="language-label" data-i18n="settings.language">Lingua</span>
+          <div class="seg" role="radiogroup" aria-labelledby="language-label">
+            <label class="seg__item">
+              <input type="radio" name="set-language" value="en">
+              <span class="seg__body" data-i18n="language.en">English</span>
+            </label>
+            <label class="seg__item">
+              <input type="radio" name="set-language" value="it">
+              <span class="seg__body" data-i18n="language.it">Italiano</span>
+            </label>
+            <label class="seg__item">
+              <input type="radio" name="set-language" value="es">
+              <span class="seg__body" data-i18n="language.es">Español</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="field">
+          <span class="field__label" id="theme-label" data-i18n="settings.theme">Tema</span>
+          <div class="seg seg--icons" role="radiogroup" aria-labelledby="theme-label">
+            <label class="seg__item">
+              <input type="radio" name="set-theme" value="light">
+              <span class="seg__body">
+                <svg class="seg__icon" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="8" cy="8" r="2.6"/><path d="M8 1.6v1.4M8 13v1.4M1.6 8h1.4M13 8h1.4M3.5 3.5l1 1M11.5 11.5l1 1M12.5 3.5l-1 1M4.5 11.5l-1 1"/></svg>
+                <span data-i18n="theme.light">Chiaro</span>
+              </span>
+            </label>
+            <label class="seg__item">
+              <input type="radio" name="set-theme" value="dark">
+              <span class="seg__body">
+                <svg class="seg__icon" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M13.3 9.7A5.7 5.7 0 0 1 6.3 2.7a5.7 5.7 0 1 0 7 7Z"/></svg>
+                <span data-i18n="theme.dark">Scuro</span>
+              </span>
+            </label>
+            <label class="seg__item">
+              <input type="radio" name="set-theme" value="system">
+              <span class="seg__body">
+                <svg class="seg__icon" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="1.8" y="2.5" width="12.4" height="8.6" rx="1.2"/><path d="M6 14h4M8 11.1V14"/></svg>
+                <span data-i18n="theme.system">Sistema</span>
+              </span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="field field--full">
+        <label for="set-token" data-i18n="settings.token">Token del bot Telegram</label>
+        <div class="secret">
+          <input id="set-token" type="password" autocomplete="off" spellcheck="false" placeholder="123456789:AA&hellip;">
+          <div class="secret__actions">
+            <button type="button" class="btnlink" id="toggle-token" data-i18n="settings.show">Mostra</button>
+          </div>
+        </div>
+        <p class="field__hint" data-i18n="settings.token.hint">Si crea con @BotFather su Telegram, comando /newbot.</p>
+      </div>
+
+      <div class="field field--full">
+        <label for="set-chat" data-i18n="settings.chat">Chat id</label>
+        <div class="secret">
+          <input id="set-chat" type="text" inputmode="numeric" autocomplete="off" spellcheck="false" placeholder="1234567890">
+          <div class="secret__actions">
+            <button type="button" class="btnlink" id="find-chat" data-i18n="settings.chat.find">Trova chat id</button>
+          </div>
+        </div>
+        <p class="field__hint" data-i18n="settings.chat.hint">Scrivi prima /start al tuo bot, poi premi Trova chat id.</p>
+        <div class="chat-options" id="chat-options" hidden></div>
+      </div>
+
+      <div class="field field--full">
+        <label for="set-bitrate" data-i18n="settings.bitrate">Qualit&agrave; MP3</label>
+        <select id="set-bitrate">
+          <option value="128">128 kbps</option>
+          <option value="192">192 kbps</option>
+          <option value="256">256 kbps</option>
+          <option value="320">320 kbps</option>
+        </select>
+      </div>
+
+      <div class="field field--full">
+        <label for="set-output" data-i18n="settings.output">Cartella di destinazione</label>
+        <input id="set-output" type="text" spellcheck="false">
+      </div>
+
+      <div class="field field--full">
+        <label for="set-download-details" data-i18n="settings.download_details">Dettagli sotto i download</label>
+        <textarea id="set-download-details" rows="3" spellcheck="false"
+          data-i18n-placeholder="settings.download_details.placeholder"
+          placeholder="🎵 {title}&#10;⏱ Duration: {duration}&#10;📦 Size: {size}"></textarea>
+        <p class="field__hint" data-i18n="settings.download_details.hint">Segnaposto disponibili: {title}, {duration}, {size}.</p>
+      </div>
+
+      <div class="btn-row field--full">
+        <button type="button" class="btn btn--secondary btn--sm" id="test-telegram" data-i18n="settings.test">Verifica collegamento</button>
+        <span class="sheet__status" id="telegram-status" role="status"></span>
+      </div>
+
+      <div class="sheet__meta field--full">
+        <p class="sheet__meta-line">
+          yt-dlp <span class="sheet__meta-version" id="ytdlp-version">&hellip;</span>
+          <span class="muted" id="ytdlp-origin"></span>
+        </p>
+        <div class="sheet__meta-actions">
+          <button type="button" class="btnlink" id="ytdlp-check" data-i18n="settings.ytdlp.check">Controlla aggiornamenti</button>
+          <span class="sheet__status" id="ytdlp-status" role="status"></span>
+        </div>
+      </div>
+    </div>
+
+    <footer class="sheet__foot">
+      <button type="button" class="btn btn--secondary" id="cancel-settings" data-i18n="action.cancel">Annulla</button>
+      <button type="submit" class="btn btn--primary" data-i18n="action.save">Salva</button>
+    </footer>
+  </form>
+</dialog>
+
+<dialog class="sheet guide" id="guide" aria-labelledby="guide-title">
+  <div class="guide__shell">
+    <nav class="guide__rail" data-i18n-aria-label="guide.rail.label" aria-label="Passi della guida">
+      <p class="guide__rail-title" data-i18n="guide.title">Guida</p>
+      <ol id="guide-rail"></ol>
+      <p class="guide__rail-foot" data-i18n="guide.rail.foot">Puoi riaprirla quando vuoi dal pulsante Guida, in alto.</p>
+    </nav>
+
+    <section class="guide__main">
+      <header class="guide__head">
+        <div>
+          <p class="guide__step" id="guide-step"></p>
+          <h2 id="guide-title" tabindex="-1"></h2>
+        </div>
+        <button type="button" class="sheet__close" id="guide-close" data-i18n-aria-label="guide.close" aria-label="Chiudi la guida">&times;</button>
+      </header>
+
+      <div class="guide__body" id="guide-body"></div>
+
+      <footer class="guide__foot">
+        <button type="button" class="btnlink" id="guide-skip" data-i18n="guide.skip">Salta la guida</button>
+        <div class="guide__nav">
+          <button type="button" class="btn btn--secondary btn--sm" id="guide-back" data-i18n="guide.back">Indietro</button>
+          <button type="button" class="btn btn--primary btn--sm" id="guide-next" data-i18n="guide.next">Avanti</button>
+        </div>
+      </footer>
+    </section>
+  </div>
+</dialog>
+
+<p class="toast" id="toast" role="status" aria-live="polite"></p>
+
+<script src="/i18n.js"></script>
+<script src="/app.js"></script>
+</body>
+</html>
