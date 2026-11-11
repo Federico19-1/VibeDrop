@@ -17,7 +17,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/YOUR_USERNAME/VibeDrop/releases/latest"><b>⬇️ Download</b></a> ·
+  <a href="https://github.com/Federico19-1/VibeDrop/releases/latest"><b>⬇️ Download</b></a> ·
   <a href="#-quick-start"><b>Quick start</b></a> ·
   <a href="#-send-to-telegram"><b>Telegram setup</b></a> ·
   <a href="docs/FAQ.md"><b>FAQ</b></a> ·
@@ -88,23 +88,14 @@ small window.
 > [step-by-step guide (Italian)](docs/GUIDA.md): it assumes no prior experience.
 
 1. **Download** `VibeDrop.exe` from the
-   [latest release](https://github.com/YOUR_USERNAME/VibeDrop/releases/latest)
-   and put it in a folder of its own, e.g. `Documents\VibeDrop`.
-2. **Get FFmpeg** (it does the MP3 conversion): download
-   [ffmpeg-release-essentials.zip](https://www.gyan.dev/ffmpeg/builds/ffmpeg-release-essentials.zip),
-   open it, go into `bin` and copy **`ffmpeg.exe`** next to `VibeDrop.exe`.
-
-   ```
-   📁 VibeDrop
-   ├── VibeDrop.exe
-   └── ffmpeg.exe
-   ```
-
-3. **Open** `VibeDrop.exe`. If Windows shows *"Windows protected your PC"*, click
+   [latest release](https://github.com/Federico19-1/VibeDrop/releases/latest).
+2. **Double-click** it. If Windows shows *"Windows protected your PC"*, click
    **More info → Run anyway** (only the first time).
-4. Check that the top bar says **ffmpeg ready**.
-5. **Paste** a YouTube link and press **Download** (or `Ctrl + Enter`).
+3. **Paste** a YouTube link and press **Download** (or `Ctrl + Enter`).
    Your MP3 appears in `Music\VibeDrop`.
+
+That is all. FFmpeg is already inside the file — there is nothing to install,
+no Python, no setup.
 
 ## 📲 Send to Telegram
 
@@ -143,7 +134,7 @@ Works on Windows, macOS and Linux. You need **Python 3.11+** and **FFmpeg**
 (on your `PATH`, or `ffmpeg.exe` in a `bin/` folder next to the project).
 
 ```powershell
-git clone https://github.com/YOUR_USERNAME/VibeDrop.git
+git clone https://github.com/Federico19-1/VibeDrop.git
 cd VibeDrop
 python -m venv .venv
 .venv\Scripts\python -m pip install -r requirements.txt   # macOS/Linux: .venv/bin/python

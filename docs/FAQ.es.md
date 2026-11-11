@@ -49,19 +49,22 @@ VibeDrop. Windows 11 ya lo incluye.
 
 ### Arriba pone "ffmpeg no encontrado"
 
-ffmpeg es el programa que convierte el audio a MP3. VibeDrop lo busca, en este orden:
+ffmpeg es el programa que convierte el audio a MP3 y **ya viene incluido dentro
+de `VibeDrop.exe`**: si usas el ejecutable de la página de releases, este mensaje
+no debería aparecer. Si lo ves, casi seguro tienes una copia antigua: vuelve a
+descargar `VibeDrop.exe` desde la
+[release más reciente](https://github.com/Federico19-1/VibeDrop/releases/latest).
 
-1. en la **misma carpeta** que `VibeDrop.exe`;
-2. en una carpeta **`bin`** junto a `VibeDrop.exe`;
-3. entre los programas instalados en el ordenador (el *PATH*).
+Si en cambio ejecutas VibeDrop desde el código fuente, necesitas tu propio
+ffmpeg. La app lo busca en este orden:
 
-La solución más sencilla es la primera: copia **ffmpeg.exe** junto a
-**VibeDrop.exe** y **vuelve a abrir** la app. Puedes conseguir `ffmpeg.exe` en
-[gyan.dev](https://www.gyan.dev/ffmpeg/builds/ffmpeg-release-essentials.zip): abre el
-`.zip`, entra en la carpeta y luego en `bin`.
+1. dentro del paquete del ejecutable;
+2. en una carpeta **`bin`** junto al programa;
+3. en la **misma carpeta** que el programa;
+4. entre los programas instalados en el ordenador (el *PATH*).
 
-Si te manejas con la terminal, `winget install Gyan.FFmpeg` lo instala para todo el
-sistema; después reinicia el ordenador.
+Desde la terminal, `winget install Gyan.FFmpeg` lo instala para todo el sistema;
+después reinicia el ordenador.
 
 ### ¿Funciona en Mac o Linux?
 
@@ -125,7 +128,7 @@ Si la carpeta no existe, VibeDrop la crea.
 | *YouTube rechazó la descarga (403)* | Espera unos minutos y pulsa **Reintentar**. Si se repite, actualiza yt-dlp. |
 | *Demasiadas solicitudes a YouTube (429)* | Has descargado mucho en poco tiempo: espera 10-15 minutos. |
 | *La conexión ha caducado* | Comprueba Internet y pulsa **Reintentar**. |
-| *No se creó el archivo MP3* | ffmpeg no funciona: vuelve a poner `ffmpeg.exe` junto a la app y ábrela de nuevo. |
+| *No se creó el archivo MP3* | La conversión falló: inténtalo de nuevo y, si persiste, vuelve a descargar `VibeDrop.exe` desde la release más reciente. |
 | *Interrumpido al cerrar la app* | Cerraste VibeDrop mientras descargaba: pulsa **Reintentar**. |
 
 ### Las descargas funcionaban y de repente fallan todas

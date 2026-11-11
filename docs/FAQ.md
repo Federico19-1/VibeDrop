@@ -48,19 +48,22 @@ VibeDrop. Windows 11 already includes it.
 
 ### The top bar says "ffmpeg not found"
 
-ffmpeg is the program that converts audio to MP3. VibeDrop looks for it, in order:
+ffmpeg is the program that converts audio to MP3 and it is **already bundled
+inside `VibeDrop.exe`**: if you are using the executable from the releases page,
+this message should never appear. If you do see it, you almost certainly have an
+old copy — download `VibeDrop.exe` again from the
+[latest release](https://github.com/Federico19-1/VibeDrop/releases/latest).
 
-1. in the **same folder** as `VibeDrop.exe`;
-2. in a **`bin`** folder next to `VibeDrop.exe`;
-3. among the programs installed system-wide (your *PATH*).
+If you run VibeDrop from source instead, you need your own ffmpeg. The app looks
+for it, in order:
 
-The easiest fix is the first one: copy **ffmpeg.exe** next to **VibeDrop.exe** and
-**reopen** the app. You can get `ffmpeg.exe` from
-[gyan.dev](https://www.gyan.dev/ffmpeg/builds/ffmpeg-release-essentials.zip): open the
-`.zip`, go into the folder, then into `bin`.
+1. inside the executable's own bundle;
+2. in a **`bin`** folder next to the program;
+3. in the **same folder** as the program;
+4. among the programs installed system-wide (your *PATH*).
 
-Comfortable with a terminal? `winget install Gyan.FFmpeg` installs it system-wide;
-restart the computer afterwards.
+From a terminal, `winget install Gyan.FFmpeg` installs it system-wide; restart
+the computer afterwards.
 
 ### Does it work on macOS or Linux?
 
@@ -122,7 +125,7 @@ If the folder does not exist, VibeDrop creates it.
 | *YouTube refused the download (403)* | Wait a few minutes and press **Retry**. If it keeps happening, update yt-dlp. |
 | *Too many requests to YouTube (429)* | You downloaded a lot in a short time: wait 10–15 minutes. |
 | *The connection timed out* | Check your internet connection and press **Retry**. |
-| *The MP3 file was not created* | ffmpeg is not working: put `ffmpeg.exe` back next to the app and reopen it. |
+| *The MP3 file was not created* | The conversion failed: try again, and if it persists download `VibeDrop.exe` again from the latest release. |
 | *Interrupted when the app was closed* | VibeDrop was closed mid-download: press **Retry**. |
 
 ### Downloads were working and suddenly they all fail

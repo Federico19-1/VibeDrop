@@ -51,13 +51,12 @@ così la trovi lì pronta da ascoltare.
 
 1. [Scaricare VibeDrop](#passo-1--scaricare-vibedrop)
 2. [Mettere VibeDrop in una cartella tutta sua](#passo-2--mettere-vibedrop-in-una-cartella-tutta-sua)
-3. [Scaricare ffmpeg, il "convertitore"](#passo-3--scaricare-ffmpeg-il-convertitore)
-4. [Aprire VibeDrop per la prima volta](#passo-4--aprire-vibedrop-per-la-prima-volta)
-5. [Creare l'icona sul Desktop](#passo-5--creare-licona-sul-desktop)
-6. [Scegliere la lingua italiana](#passo-6--scegliere-la-lingua-italiana)
-7. [Scaricare la tua prima canzone](#passo-7--scaricare-la-tua-prima-canzone)
-8. [Ricevere le canzoni sul telefono con Telegram](#passo-8--ricevere-le-canzoni-sul-telefono-con-telegram)
-9. [L'uso di tutti i giorni](#passo-9--luso-di-tutti-i-giorni)
+3. [Aprire VibeDrop per la prima volta](#passo-3--aprire-vibedrop-per-la-prima-volta)
+4. [Creare l'icona sul Desktop](#passo-4--creare-licona-sul-desktop)
+5. [Scegliere la lingua italiana](#passo-5--scegliere-la-lingua-italiana)
+6. [Scaricare la tua prima canzone](#passo-6--scaricare-la-tua-prima-canzone)
+7. [Ricevere le canzoni sul telefono con Telegram](#passo-7--ricevere-le-canzoni-sul-telefono-con-telegram)
+8. [L'uso di tutti i giorni](#passo-8--luso-di-tutti-i-giorni)
 10. [Se qualcosa non funziona](#se-qualcosa-non-funziona)
 
 ---
@@ -95,7 +94,8 @@ così la trovi lì pronta da ascoltare.
 
 ## Passo 2 · Mettere VibeDrop in una cartella tutta sua
 
-Così è tutto in ordine e nel passo 3 sarà facile aggiungere il convertitore.
+Non è obbligatorio, ma così il programma non si perde tra i file della cartella
+Download e lo ritrovi sempre.
 
 1. Apri **Esplora file**: è l'icona a forma di **cartella gialla** nella barra in
    basso dello schermo.
@@ -116,51 +116,7 @@ Così è tutto in ordine e nel passo 3 sarà facile aggiungere il convertitore.
 
 ---
 
-## Passo 3 · Scaricare ffmpeg, il "convertitore"
-
-VibeDrop ha bisogno di un piccolo programma gratuito chiamato **ffmpeg**: è quello
-che trasforma l'audio del video in un file MP3. Va scaricato una volta sola.
-
-1. Nel browser scrivi nella barra degli indirizzi:
-
-   ```
-   https://www.gyan.dev/ffmpeg/builds/ffmpeg-release-essentials.zip
-   ```
-
-   e premi **Invio**. Il download parte da solo e dura circa un minuto.
-2. Apri **Esplora file** → **Download**.
-3. Trovi un file che si chiama **ffmpeg-** seguito da alcuni numeri, con
-   l'icona di una **cartella con la cerniera**. È un archivio *.zip*, cioè un
-   "pacchetto" che contiene altri file. Fai **doppio clic** per aprirlo.
-4. Dentro c'è **una sola cartella** (anche questa si chiama ffmpeg-…).
-   Fai **doppio clic** per entrarci.
-5. Fai **doppio clic** sulla cartella **bin**.
-6. Ci sono tre file. Clicca con il **tasto destro** su **ffmpeg** (proprio
-   *ffmpeg*, non *ffplay* né *ffprobe*) → **Copia**.
-7. Vai in **Documenti → VibeDrop** (la cartella del passo 2).
-8. **Tasto destro** in un punto vuoto → **Incolla**.
-
-Alla fine la cartella deve essere così:
-
-```
-📁 Documenti
-└── 📁 VibeDrop
-    ├── VibeDrop.exe     ← il programma
-    └── ffmpeg.exe       ← il convertitore
-```
-
-> [!TIP]
-> Se Windows non mostra il ".exe" alla fine dei nomi, va benissimo lo stesso:
-> vedrai semplicemente **VibeDrop** e **ffmpeg**.
-
-✅ **Hai finito quando** in **Documenti → VibeDrop** ci sono **due file**:
-**VibeDrop** e **ffmpeg**.
-
-*(Il file .zip nella cartella Download ormai non serve più: puoi cancellarlo.)*
-
----
-
-## Passo 4 · Aprire VibeDrop per la prima volta
+## Passo 3 · Aprire VibeDrop per la prima volta
 
 1. In **Documenti → VibeDrop** fai **doppio clic** su **VibeDrop**.
 2. **La prima volta Windows potrebbe mostrare una schermata blu** con scritto
@@ -172,22 +128,20 @@ Alla fine la cartella deve essere così:
    Questa schermata compare **solo la prima volta**.
 3. L'app si apre. Il primo avvio può richiedere **10-20 secondi**: è normale.
    Per un attimo compare il logo **VibeDrop**, poi la finestra principale.
-   All'inizio l'app è **in inglese**: la mettiamo in italiano al passo 6.
+   All'inizio l'app è **in inglese**: la mettiamo in italiano al passo 5.
 4. Dentro l'app c'è anche una **Guide** (guida) che riassume questi passi: la
    apri quando vuoi dal pulsante **Guide** in alto.
-5. Guarda in alto a destra: c'è una piccola scritta dentro un ovale.
-   - **ffmpeg pronto** (con un pallino azzurro): perfetto, tutto a posto. 🎉
-   - **ffmpeg non trovato** (in rosso): il convertitore non è nel posto giusto.
-     Chiudi VibeDrop, ripeti il [passo 3](#passo-3--scaricare-ffmpeg-il-convertitore)
-     controllando che **ffmpeg** sia nella **stessa cartella** di **VibeDrop**,
-     poi riapri l'app.
+5. Guarda in alto a destra: c'è una piccola scritta dentro un ovale con un
+   pallino azzurro, **ffmpeg pronto** (o *ffmpeg ready*, se l'app è ancora in
+   inglese). Vuol dire che il convertitore audio è al suo posto: è già dentro
+   il programma, non devi installare niente. 🎉
 
 ✅ **Hai finito quando** l'app è aperta e in alto a destra c'è scritto
-**ffmpeg pronto** (o *ffmpeg ready*, se l'app è ancora in inglese).
+**ffmpeg pronto** (o *ffmpeg ready*).
 
 ---
 
-## Passo 5 · Creare l'icona sul Desktop
+## Passo 4 · Creare l'icona sul Desktop
 
 Così le prossime volte apri VibeDrop direttamente dal Desktop, senza cercarlo.
 
@@ -206,7 +160,7 @@ gli angoli arrotondati e cinque barrette azzurre**.
 
 ---
 
-## Passo 6 · Scegliere la lingua italiana
+## Passo 5 · Scegliere la lingua italiana
 
 1. In VibeDrop clicca in alto a destra sul pulsante **Settings** (vuol dire
    *Impostazioni*).
@@ -227,7 +181,7 @@ del computer).
 
 ---
 
-## Passo 7 · Scaricare la tua prima canzone
+## Passo 6 · Scaricare la tua prima canzone
 
 ### 7a. Copiare l'indirizzo della canzone da YouTube
 
@@ -257,7 +211,7 @@ Sotto, nella sezione **Coda**, compare la canzone e la scritta cambia da sola:
 | **In coda** | Aspetta il suo turno |
 | **Scarico 45%** | Sta scaricando |
 | **Converto in MP3** | Sta trasformando l'audio in MP3 |
-| **Invio su Telegram** | Te la sta mandando sul telefono (solo se hai fatto il passo 8) |
+| **Invio su Telegram** | Te la sta mandando sul telefono (solo se hai fatto il passo 7) |
 | **Fatto** ✅ | Finito! |
 
 Di solito ci vogliono da **10 secondi a un minuto**.
@@ -282,7 +236,7 @@ finestra di VibeDrop, di solito **Musica → VibeDrop**.
 
 ---
 
-## Passo 8 · Ricevere le canzoni sul telefono con Telegram
+## Passo 7 · Ricevere le canzoni sul telefono con Telegram
 
 Questo passo è **facoltativo**: se non lo fai, VibeDrop funziona lo stesso e le
 canzoni restano sul computer.
@@ -447,7 +401,7 @@ robot, e la puoi ascoltare toccandola.
 
 ---
 
-## Passo 9 · L'uso di tutti i giorni
+## Passo 8 · L'uso di tutti i giorni
 
 Dopo la prima volta, scaricare una canzone richiede solo questo:
 
@@ -486,8 +440,7 @@ Ecco i problemi più comuni e come risolverli in un minuto.
 
 | Cosa vedi | Cosa fare |
 |---|---|
-| *"Windows ha protetto il PC"* | **Ulteriori informazioni** → **Esegui comunque** ([passo 4](#passo-4--aprire-vibedrop-per-la-prima-volta)) |
-| In alto c'è scritto **ffmpeg non trovato** in rosso | **ffmpeg** non è nella stessa cartella di **VibeDrop**: rifai il [passo 3](#passo-3--scaricare-ffmpeg-il-convertitore) e riapri l'app |
+| *"Windows ha protetto il PC"* | **Ulteriori informazioni** → **Esegui comunque** ([passo 3](#passo-3--aprire-vibedrop-per-la-prima-volta)) |
 | *"Link non riconosciuto"* | Hai incollato un indirizzo che non è un video di YouTube. Ricopialo dalla barra degli indirizzi mentre il video è aperto |
 | Una canzone resta su **Errore** | Clicca su **Riprova**. Se succede con tutte, guarda se in alto c'è **yt-dlp da aggiornare** e clicca **Aggiorna** |
 | *"Token non valido"* | Il token è stato copiato a metà o con uno spazio di troppo: ricopialo dal [punto 8.4](#84--copiare-il-token-la-chiave) |

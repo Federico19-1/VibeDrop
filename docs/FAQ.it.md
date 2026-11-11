@@ -48,17 +48,21 @@ Su Windows 11 è già presente.
 
 ### In alto c'è scritto "ffmpeg non trovato"
 
-ffmpeg è il programma che converte l'audio in MP3. VibeDrop lo cerca, in quest'ordine:
+ffmpeg è il programma che converte l'audio in MP3 ed è **già incluso dentro
+`VibeDrop.exe`**: se usi l'eseguibile scaricato dalle release, questo messaggio
+non dovrebbe comparire. Se lo vedi, hai quasi certamente una copia vecchia:
+scarica di nuovo `VibeDrop.exe` dalla
+[release più recente](https://github.com/Federico19-1/VibeDrop/releases/latest).
 
-1. nella **stessa cartella** di `VibeDrop.exe`;
-2. in una cartella **`bin`** accanto a `VibeDrop.exe`;
-3. tra i programmi installati nel computer (il cosiddetto *PATH*).
+Se invece avvii VibeDrop dal codice sorgente, ffmpeg va procurato a parte.
+L'app lo cerca in quest'ordine:
 
-La soluzione più semplice è la prima: copia **ffmpeg.exe** accanto a
-**VibeDrop.exe** (vedi il [passo 3 della guida](GUIDA.md#passo-3--scaricare-ffmpeg-il-convertitore))
-e **riapri** l'app.
+1. dentro il pacchetto dell'eseguibile;
+2. in una cartella **`bin`** accanto al programma;
+3. nella **stessa cartella** del programma;
+4. tra i programmi installati nel computer (il cosiddetto *PATH*).
 
-Se sei pratico del terminale, puoi anche installarlo per tutto il computer con
+Dal terminale lo installi per tutto il computer con
 `winget install Gyan.FFmpeg`. Poi riavvia il computer.
 
 ### Funziona su Mac o Linux?
@@ -122,7 +126,7 @@ Se la cartella non esiste, VibeDrop la crea.
 | *YouTube ha rifiutato il download (403)* | Aspetta qualche minuto e premi **Riprova**. Se si ripete, aggiorna yt-dlp. |
 | *Troppe richieste a YouTube (429)* | Hai scaricato molto in poco tempo: aspetta 10-15 minuti. |
 | *La connessione è andata in timeout* | Controlla Internet e premi **Riprova**. |
-| *Il file MP3 non è stato creato* | ffmpeg non funziona: rimetti `ffmpeg.exe` accanto all'app e riaprila. |
+| *Il file MP3 non è stato creato* | La conversione è fallita: riprova, e se continua scarica di nuovo `VibeDrop.exe` dalla release più recente. |
 | *Interrotto alla chiusura dell'app* | Hai chiuso VibeDrop mentre scaricava: premi **Riprova**. |
 
 ### I download funzionavano e all'improvviso hanno smesso tutti
