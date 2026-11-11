@@ -1,18 +1,33 @@
+# Python
 .venv/
 __pycache__/
 *.pyc
 
+# PyInstaller output (rebuild with: python build.py)
 build/
 dist/
 *.spec
+
+# the ffmpeg binary you add for packaging
+bin/
 
 # local test folders and personal data
 .testdata*/
 audio/
 settings.json
 state.json
+notes.json
+update.json
 cookies.txt
 .env
 
-# the ffmpeg binary you add for packaging
-bin/
+# editor / AI-assistant tooling (kept locally, not part of the app)
+.claude/
+.freebuff/
+.vscode/
+.idea/
+
+# OS clutter
+Thumbs.db
+desktop.ini
+.DS_Store

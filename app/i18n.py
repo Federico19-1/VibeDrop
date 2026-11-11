@@ -181,7 +181,7 @@ MESSAGES = {
         "telegram.hint_too_big": "Archivo demasiado grande para Telegram (máx. 50 MB).",
         "telegram.hint_timeout": "Telegram no respondió a tiempo: inténtalo de nuevo.",
         "telegram.no_chats": "No se encontró ninguna chat. Abre Telegram, busca tu bot, pulsa Iniciar y envía un mensaje, luego vuelve a intentarlo.",
-        "telegram.test_message": "Conexión correcta: el extractor de audio puede enviarte los archivos aquí.",
+        "telegram.test_message": "Conexión correcta: VibeDrop puede enviarte los archivos aquí.",
         "telegram.too_big_message": "El archivo es demasiado grande para Telegram (máx. {limit} MB).\nSe queda en el PC en:\n{path}",
         "telegram.send_failed_message": "No se pudo enviar el archivo: {error}\nSe queda en el PC en:\n{path}",
         "update.no_version": "Respuesta sin versión.",

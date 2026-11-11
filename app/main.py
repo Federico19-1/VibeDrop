@@ -19,7 +19,7 @@ from .server import create_server, start
 
 def parse_args(argv):
     parser = argparse.ArgumentParser(
-        prog="estrattore-audio",
+        prog="vibedrop",
         description="Scarica l'audio dei video YouTube in MP3, con una finestra.",
     )
     parser.add_argument("--serve", action="store_true", help="avvia solo il server locale")

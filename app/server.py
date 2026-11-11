@@ -270,7 +270,8 @@ class Handler(BaseHTTPRequestHandler):
             200,
             target.read_bytes(),
             ctype,
-            cache=target.suffix in (".woff2", ".css"),
+            # only fonts: a cached stylesheet would keep an old layout after an update
+            cache=target.suffix == ".woff2",
         )
 
 

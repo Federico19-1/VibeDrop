@@ -407,8 +407,7 @@ function applyLanguage(raw, { persist = true } = {}) {
   renderNotes(state.notes);
   renderYtdlp(state.ytdlp);
   setRuntime(state.runtime.ok, state.runtime.message);
-  el.footPath.value = state.settings.output_dir || "";
-  el.footPath.title = t("foot.open", { path: state.settings.output_dir || "" });
+  setFootPath(state.settings.output_dir);
   if (!el.chatOptions.hidden) {
     el.chatOptions.hidden = true;
     el.chatOptions.replaceChildren();
@@ -763,7 +762,34 @@ function renderJobs(jobs) {
   el.clear.disabled = !jobs.some((job) => job.status === "done" || job.status === "error");
 }
 
-/* ── appunti ──────────────────────────────────────────────────────────── */
+/* ── destination folder (footer) ───────────────────────────────────────── */
+
+/* The underline is the input's bottom border, so the input must be exactly as
+   wide as its text (capped by the footer slot). CSS `field-sizing: content`
+   does it natively; this measures the text where that is not supported. */
+const FIELD_SIZING = Boolean(window.CSS?.supports?.("field-sizing", "content"));
+let footMeasureContext = null;
+
+function fitFootPath() {
+  if (FIELD_SIZING) return;
+  footMeasureContext ||= document.createElement("canvas").getContext("2d");
+  const style = getComputedStyle(el.footPath);
+  footMeasureContext.font = `${style.fontStyle} ${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
+  const text = el.footPath.value || " ";
+  el.footPath.style.width = `${Math.ceil(footMeasureContext.measureText(text).width) + 2}px`;
+}
+
+/* The poll runs every 1.2 s: it must never overwrite what the user is typing. */
+function setFootPath(path, { force = false } = {}) {
+  const value = path || "";
+  if (force || document.activeElement !== el.footPath) {
+    if (el.footPath.value !== value) el.footPath.value = value;
+  }
+  el.footPath.title = t("foot.open", { path: value });
+  fitFootPath();
+}
+
+/* ── notes ────────────────────────────────────────────────────────────── */
 
 function noteDate(seconds) {
   if (!seconds) return "";
@@ -1175,8 +1201,7 @@ async function refresh() {
     renderJobs(state.jobs);
     renderNotes(state.notes);
     renderYtdlp(data.ytdlp);
-    el.footPath.value = data.settings.output_dir || "";
-    el.footPath.title = t("foot.open", { path: data.settings.output_dir || "" });
+    setFootPath(data.settings.output_dir);
   } catch (error) {
     setRuntime(false, t("runtime.offline"));
   } finally {
@@ -1341,6 +1366,16 @@ el.clear.addEventListener("click", async () => {
   }
 });
 
+el.footPath.addEventListener("input", fitFootPath);
+el.footPath.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") el.footPath.blur();
+  if (event.key === "Escape") {
+    el.footPath.value = state.settings.output_dir || "";
+    fitFootPath();
+    el.footPath.blur();
+  }
+});
+
 el.footPath.addEventListener("click", async () => {
   el.footPath.select();
 });
@@ -1354,8 +1389,7 @@ el.footPath.addEventListener("change", async () => {
   });
   if (data?.settings) {
     state.settings = data.settings;
-    el.footPath.value = data.settings.output_dir;
-    el.footPath.title = t("foot.open", { path: data.settings.output_dir });
+    setFootPath(data.settings.output_dir, { force: true });
   }
 });
 
