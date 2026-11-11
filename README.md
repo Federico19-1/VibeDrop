@@ -30,7 +30,6 @@
 <p align="center">
   <img src="docs/images/vibedrop.png" width="860" alt="VibeDrop main window">
 </p>
--->
 
 <br>
 
